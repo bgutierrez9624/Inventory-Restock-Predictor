@@ -59,3 +59,33 @@ def main():
             "days_left": days_left,
             "status": status
         })
+
+#Add report output and restock alert summary for inventory
+
+print("\n=== Restock Report ===")
+    for item in inventory:
+        print(f"\nProduct: {item['name']}")
+        print(f"Current Stock: {item['current_stock']}")
+        print(f"Average Daily Sales: {item['avg_daily_sales']}")
+
+        if item["days_left"] is None:
+            print("Days Left: No sales data")
+        else:
+            print(f"Days Left: {item['days_left']:.1f}")
+
+        print(f"Status: {item['status']}")
+
+    print("\n=== Items That Need Attention ===")
+    found_attention = False
+
+    for item in inventory:
+        if item["status"] in ["RESTOCK NOW", "Restock soon"]:
+            found_attention = True
+            print(f"- {item['name']}: {item['status']}")
+
+    if not found_attention:
+        print("All items are stocked well.")
+
+
+if __name__ == "__main__":
+    main()
